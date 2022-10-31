@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUpdateUserFormRequest;
 use Illuminate\Support\Facades\Hash;
@@ -50,8 +51,11 @@ class UserController extends Controller
         if (!$user = User::firstWhere('uuid', $uuid)) {
             return redirect()->route('user.list');
         };
+        $article = new Article;
+        $user_article = $article->user_has_article_check($user->id);
         
-        return view('users.edit', compact('user'));
+        
+        return view('users.edit', compact('user', 'user_article'));
     }
 
 

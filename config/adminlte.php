@@ -295,12 +295,7 @@ return [
         // Sidebar items:
         
         
-        [
-            'text'    => 'Users List',
-            'icon'    => 'fas fa-fw fa-user',
-            'url'     => 'user'
-            
-        ],
+        
         [
             'text' => 'Create Article',
             'icon'    => 'fas fa-fw fa-file',
@@ -310,6 +305,12 @@ return [
             'text'    => ' Articles List',
             'icon'    => 'fas fa-fw fa-file',
             'url'     => 'article/list',
+            
+        ],
+        [
+            'text'    => 'Users List',
+            'icon'    => 'fas fa-fw fa-user',
+            'url'     => 'user'
             
         ],
         [

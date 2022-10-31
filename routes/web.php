@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +28,9 @@ Route::group(['middleware' =>['isLoggedIn']], function () {
     Route::put('/user/{uuid}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{uuid}', [UserController::class, 'delete'])->name('user.delete');
     Route::get('/user', [UserController::class, 'list'])->name('user.list');
+
+    Route::get('/article/create', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('/article', [ArticleController::class, 'store'])->name('article.store');
     
 });
 

@@ -82,6 +82,7 @@
                     
                     
                 </form>
+                @if($user_article == false)
                 <form action="{{ route('user.delete', $user->uuid) }}" method="post">
                     @method('DELETE')
                     @csrf
@@ -90,6 +91,7 @@
                         Delete
                     </button>
                 </form>
+                @endif
             </div>
         </div>
     </div>

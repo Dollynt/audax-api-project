@@ -49,5 +49,7 @@ class User extends Authenticatable
 
         return $users;
     }
+
+    
     
 }
