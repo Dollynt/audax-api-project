@@ -28,9 +28,11 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->username }}</td>
                                 <td class="w-30">
-                                    <a class="btn btn-info" title="user_edit" href="{{ route('user.edit', $user->uuid) }}">Edit User</a>
+                                    <a class="btn btn-info" title="user_edit" href ="">Edit User</a>
                                 </td>
-                                
+                                <td class="w-30">
+                                    <a class="btn btn-info" title="user_details" href="{{ route('user.details', $data->uuid) }}">User Details</a>
+                                </td>
                             @empty
                             @endforelse
                         </tbody>

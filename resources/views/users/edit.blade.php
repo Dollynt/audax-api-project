@@ -4,93 +4,91 @@
 
 @section('content_header')
     <h1 class="m-0 text-dark">
-        User Data
+        User Update
     </h1>
 @stop
 
 @section('content')
 
+
 <div class="row">
-    <div class="col-12">
+    <div class="col-8">
         <div class="card">
             <div class="card-body">
-                <table id="table" class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                          <th>Username</th>
-                          <th>Uuid</th>
-                          <th>Registered_At</th>
-                          <th>Actions</th>
-                        </tr>  
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $user->username }}</td>
-                            <td>{{ $user->uuid }}</td>
-                            <td>{{ $user->registeredAt }}</td>
-                            <td class="w-30"> 
-                                <a class="btn btn-danger" title="edit" href="">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<h4>User Update</h4>
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-            <form action="{{ route('user.store') }}" method="post">
+            @if ($errors->any())
+                <ul class="errors">
+                    @foreach ($errors->all() as $error)
+                        <li class="error">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
+
+            <form action="{{ route('user.update', $user->uuid) }}" method="post">
+                    @method('PUT')
                     @csrf
 
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">
+                            {{ Session::get('fail') }}
+                        </div>
+                    @endif
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
+
                     {{-- UserName field --}}
-                    <div class="input-group mb-3">
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                            value="{{ old('name') }}" placeholder="Username" autofocus>
-
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                            </div>
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-border" name="username" id="username" value="{{ $user->username }}" placeholder="username">
                         </div>
-
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
 
-                    
                     {{-- Password field --}}
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                            placeholder="{{ __('adminlte::adminlte.password') }}">
-
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                            </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-border" name="password" id="password"  placeholder="password">
                         </div>
-
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
 
-                    
+                    {{-- Uuid field --}}
+                    <div class="form-group row">
+                        <label for="uuid" class="col-sm-2 col-form-label">Uuid</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-border" name="uuid" id="uuid" value="{{ $user->uuid }}" placeholder="uuid" disabled>
+                        </div>
+                    </div>
+
+                    {{-- RegisteredAt field --}}
+                    <div class="form-group row">
+                        <label for="registeredAt" class="col-sm-2 col-form-label">RegisteredAt</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-border" name="registeredAt" id="registeredAt" value="{{ $user->registeredAt }}" placeholder="registeredAt" disabled>
+                        </div>
+                    </div>
+
 
                     {{-- Register button --}}
                     <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                         <span class="fas fa-arrows-rotate"></span>
                         Update
                     </button>
-
+                    
+                    
+                    
+                    
+                    
+                </form>
+                <form action="{{ route('user.delete', $user->uuid) }}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                        <span class="fas fa-arrows-rotate"></span>
+                        Delete
+                    </button>
                 </form>
             </div>
         </div>

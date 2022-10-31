@@ -44,7 +44,7 @@ class User extends Authenticatable
     public function get_users()
     {
         $users = DB::table('users')
-        ->select('users.username as username',  'users.uuid as uuid', 'users.registeredAt as registeredAt')
+        ->select('users.id as id', 'users.username as username',  'users.uuid as uuid', 'users.registeredAt as registeredAt')
         ->get();
 
         return $users;
