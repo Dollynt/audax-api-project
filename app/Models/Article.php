@@ -8,6 +8,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\DB;
 
+
 class Article extends Model
 {
     use HasFactory;
@@ -32,7 +33,6 @@ class Article extends Model
         'title',
         'resume',
         'text',
-        'user_id',
     ];
     
    
@@ -40,15 +40,46 @@ class Article extends Model
     public $timestamps = ["registeredAt"]; 
     const UPDATED_AT = null;
 
-    public function user_has_article_check($id)
+    public function get_id($uuid)
     {
-        $user_id = DB::table('articles')
-        ->select('user_id')->where('user_id', $id)
-        ->first();
-        if($user_id != null){
-            return true;
-        }
+        $users = DB::table('users')
+        ->select('users.id as id')->where('uuid', $uuid)
+        ->get();
 
-        return false;
+        return $users;
+    }
+
+    public function get_articles()
+    {
+        $articles = DB::table('articles')
+        ->select('user_id', 'uuid', 'title', 'resume', 'text', 'slug', 'registeredAt')
+        ->get();
+
+        return $articles;
+    }
+    public function get_uuid($id)
+    {
+        $articles = DB::table('users')
+        ->select('uuid')
+        ->where('id', $id)->get();
+
+        return $articles;
+    }
+    public function get_username($id)
+    {
+        $articles = DB::table('users')
+        ->select('username')
+        ->where('id', $id)->get();
+
+        return $articles;
+    }
+    public function getArticle($uuid)
+    { 
+        $articles = DB::table('articles')
+        ->select('user_id', 'uuid', 'title', 'resume', 'text', 'slug', 'registeredAt')
+        ->where('uuid', $uuid)->get();
+        
+       
+        return $articles;
     }
 }

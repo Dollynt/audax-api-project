@@ -15,6 +15,7 @@ use App\Http\Controllers\ArticleController;
 |
 */
 
+/*
 
 Route::group(['middleware' =>['alreadyLoggedIn']], function () {
     
@@ -38,5 +39,5 @@ Route::group(['middleware' =>['isLoggedIn']], function () {
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
 Route::post('/user/login', [UserController::class, 'auth'])->name('user.auth');
 
-
+*/
 

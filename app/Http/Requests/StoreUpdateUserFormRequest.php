@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreUpdateUserFormRequest extends FormRequest
 {
@@ -23,16 +25,44 @@ class StoreUpdateUserFormRequest extends FormRequest
      */
     public function rules()
     {
-        $uuid = $this->uuid ?? '';
+        
         $rules = [
-            'username' => ['required', 'string', 'min:3', 'max:150', "unique:users,username,{$uuid},uuid"],
+            'username' => ['required', 'string', 'min:3', 'max:150', "unique:users"],
             'password' => ['required', 'string', 'min:8'],
         ];
 
-        if ($this->method('PUT')) {
-            $rules['password'] = ['nullable', 'string', 'min:8'];
-        };
+        
 
         return $rules;
     }
+
+    public function failedValidation(Validator $validator)
+
+    {
+
+        throw new HttpResponseException(response()->json([
+            'error' => [
+                'message' => 'Validation error',
+                'details' => $validator->errors()
+                    ]    
+                ], 400));
+            
+                
+
+    }
+
+    public function messages()
+
+    {
+
+        return [
+
+            'username.required' => 'Username is required',
+
+            'password.required' => 'Password is required'
+
+        ];
+
+    }
+
 }

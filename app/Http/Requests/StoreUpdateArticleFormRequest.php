@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreUpdateArticleFormRequest extends FormRequest
 {
@@ -29,10 +31,27 @@ class StoreUpdateArticleFormRequest extends FormRequest
             'text' => ['required', 'string', 'min:200'],
         ];
 
+        
+
         /*if ($this->method('PUT')) {
             $rules['password'] = ['nullable', 'string', 'min:8'];
         };*/
 
         return $rules;
+    }
+
+    public function failedValidation(Validator $validator)
+
+    {
+
+        throw new HttpResponseException(response()->json([
+            'error' => [
+                'message' => 'Validation error',
+                'details' => $validator->errors()
+                    ]    
+                ], 400));
+            
+                
+
     }
 }

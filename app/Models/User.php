@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\DB;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -49,6 +50,8 @@ class User extends Authenticatable
 
         return $users;
     }
+
+   
 
     
     

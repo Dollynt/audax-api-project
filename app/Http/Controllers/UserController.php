@@ -107,6 +107,7 @@ class UserController extends Controller
         $data['password'] = Hash::make($request->password);
         $user = User::create($data);
         if($user){
+            dd($user);
             return back()->with('success', 'User created with success');
         } else {
             return back()->with('fail', 'Error creating user');
