@@ -114,9 +114,9 @@ class ArticleController extends Controller
 
     public function update(StoreUpdateArticleFormRequest $request, $uuid)
     {
-        $article_check = Article::firstWhere('uuid', $uuid);
+        $article = Article::firstWhere('uuid', $uuid);
         
-        if(is_null($article_check)){
+        if(is_null($article)){
             return response()->json([
                 'error' => [
                     'message' => 'Article not found'
@@ -125,16 +125,16 @@ class ArticleController extends Controller
         }
 
         $user = new User;
-        $article = new Article;
-        
-        $user->uuid = $request->input('User')['uuid'];
-        $user->id = $article->get_id($user->uuid)[0]->id;
-        $user->username = $request->input('User')['username'];
-        
+
+        $user->uuid = $article->get_uuid($article->user_id)[0]->uuid;
+        $user->username = $article->get_username($article->user_id)[0]->username;
+
         $article->title = $request->title;
         $article->resume = $request->resume;
         $article->text = $request->text;
         $article->save(); 
+
+        
         
         return response()->json([ 
             'uuid'         => $article->uuid,
@@ -153,9 +153,9 @@ class ArticleController extends Controller
 
     public function delete($uuid)
     {
-        $article_check = Article::firstWhere('uuid', $uuid);
+        $article = Article::firstWhere('uuid', $uuid);
         
-        if(is_null($article_check)){
+        if(is_null($article)){
             return response()->json([
                 'error' => [
                     'message' => 'Article not found'
